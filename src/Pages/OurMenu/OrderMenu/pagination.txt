@@ -1,0 +1,8 @@
+pagination -
+for developing pagination
+first  - state for currentpage 
+second - itemsPerPage
+third  - single category lastItemIdx + firstItemIdx
+fourth - totalpages = category.length/itemsPerPage
+fifth  - pages with totalpages
+sixth  - used map for button of pagination and showed data

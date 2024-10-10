@@ -33,8 +33,8 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row space-y-6 items-center justify-center text-center px-8 py-8 lg:w-[1000px] lg:h-[500px] bg-slate-200 border rounded shadow-4xl lg:mt-16 font-cinzel">
-      <div className="lg:w-1/2 flex flex-col items-center justify-center space-y-4">
+    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row space-y-6 items-center justify-center text-center px-8 py-8 lg:w-[1000px] lg:h-[500px] bg-zinc-800 border rounded shadow-4xl lg:mt-16 font-cinzel">
+      <div className="lg:w-1/2 flex flex-col items-center justify-center space-y-4 text-white">
         <h2 className="text-5xl font-bold">Login</h2>
         <p className="lg:w-[400px]">
           Enter your details below to access your account and manage your orders

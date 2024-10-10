@@ -16,8 +16,10 @@ const Testimonial = () => {
         setCurrentSlide((next)=>next=== 0?review.length-1 : next-1);
     }
     useEffect(()=>{
-        axios.get("http://localhost:5000/reviews").then(res=>setReview(res.data))
+        axios.get("http://localhost:5000/reviews")
+        .then(res=>setReview(res.data))
     },[])
+    // console.log("reviews",review);
     return (
       <div className="overflow-hidden">
         <SectionTitle

@@ -33,10 +33,10 @@ const Login = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row space-y-6 items-center justify-center text-center px-8 py-8 lg:w-[1000px] lg:h-[500px] bg-zinc-800 border rounded shadow-4xl lg:mt-16 font-cinzel">
+    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row space-y-6 items-center justify-center text-center px-8 py-8 lg:w-[1000px] lg:h-[500px] bg-zinc-900 border-blue-600 rounded shadow-4xl lg:mt-16 font-cinzel border-2">
       <div className="lg:w-1/2 flex flex-col items-center justify-center space-y-4 text-white">
-        <h2 className="text-5xl font-bold">Login</h2>
-        <p className="lg:w-[400px]">
+        <h2 className="text-5xl text-blue-600 font-bold">Login</h2>
+        <p className="lg:w-[400px] text-gray-300">
           Enter your details below to access your account and manage your orders
           seamlessly.
         </p>
@@ -48,7 +48,7 @@ const Login = () => {
         >
           <div>
             <label className="label">
-              <span className="text-white label-text font-bold">Email</span>
+              <span className=" label-text text-blue-400 font-bold">Email</span>
             </label>
             <input
               className="border-2 border-black rounded text-center"
@@ -62,7 +62,7 @@ const Login = () => {
           </div>
           <div>
             <label className="label">
-              <span className="label-text font-bold text-white">Password</span>
+              <span className="label-text text-blue-400 font-bold ">Password</span>
             </label>
             <input
               className="border-2 text-center border-black rounded"
@@ -76,7 +76,7 @@ const Login = () => {
           </div>
           <div>
             <label className="label">
-              <span className="label-text font-bold text-white">Captcha</span>
+              <span className="label-text text-blue-400 font-bold ">Captcha</span>
             </label>
             <div className="border-2 border-black rounded text-center bg-white py-2">
               {captcha}

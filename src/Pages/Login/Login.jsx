@@ -1,35 +1,44 @@
-import { useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
   const [captcha, setCaptcha] = useState(generateCaptcha());
-  const [captchaInput, setCaptchaInput] = useState("");
-  const [email, setEmail] = useState(""); // State for email
-  const [password, setPassword] = useState(""); // State for password
-
-  // Function to generate a random CAPTCHA
+  const [disable, setDisable] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const inputref = useRef();
+  const {LogIn}=useContext(AuthContext);
   function generateCaptcha() {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const char =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
     let result = "";
     for (let i = 0; i < 6; i++) {
-      result += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
+      result += char.charAt(Math.floor(Math.random() * char.length));
     }
     return result;
   }
 
+  const handleCaptchaInputChange = () => {
+    const input = inputref.current.value;
+    if (input === captcha) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+      // setCaptcha(generateCaptcha())
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (captchaInput === captcha) {
-      alert("CAPTCHA matched! Proceeding with login...");
-      // Handle login logic here using email and password
-      console.log("Email:", email);
-      console.log("Password:", password);
-    } else {
-      alert("CAPTCHA did not match. Please try again.");
-      setCaptcha(generateCaptcha());
-    }
+    // alert("Logging in...");
+    LogIn(email,password).then(result=>{
+      const user=result.user;
+      console.log('logged user',user);
+      alert("logged succesfully")
+    })
+    .catch(error=>console.log(error.message))
+
   };
 
   return (
@@ -48,7 +57,7 @@ const Login = () => {
         >
           <div>
             <label className="label">
-              <span className=" label-text text-blue-400 font-bold">Email</span>
+              <span className="label-text text-blue-400 font-bold">Email</span>
             </label>
             <input
               className="border-2 border-black rounded text-center"
@@ -56,13 +65,15 @@ const Login = () => {
               name="email"
               placeholder="Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Update email state
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div>
             <label className="label">
-              <span className="label-text text-blue-400 font-bold ">Password</span>
+              <span className="label-text text-blue-400 font-bold">
+                Password
+              </span>
             </label>
             <input
               className="border-2 text-center border-black rounded"
@@ -70,13 +81,16 @@ const Login = () => {
               name="password"
               placeholder="Password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} // Update password state
+              autoComplete={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <div>
             <label className="label">
-              <span className="label-text text-blue-400 font-bold ">Captcha</span>
+              <span className="label-text text-blue-400 font-bold">
+                Captcha
+              </span>
             </label>
             <div className="border-2 border-black rounded text-center bg-white py-2">
               {captcha}
@@ -85,22 +99,30 @@ const Login = () => {
               className="border-2 border-black rounded text-center mt-2"
               type="text"
               name="captcha"
+              ref={inputref}
+              onChange={handleCaptchaInputChange} // Changed to onChange
               placeholder="Type the CAPTCHA above"
-              value={captchaInput}
-              onChange={(e) => setCaptchaInput(e.target.value)}
               required
             />
           </div>
           <div className="pt-4">
             <button
-              type="submit"
-              name="login"
-              className="text-white border rounded shadow-xl w-16 hover:bg-yellow-400 hover:text-black"
+              type="submit" // Change to button type submit
+              disabled={disable}
+              className={`text-white border rounded shadow-xl w-16 hover:bg-yellow-400 hover:text-black ${
+                disable ? "btn-disabled bg-red-600" : "bg-purple-400 text-black"
+              }`}
             >
               Login
             </button>
           </div>
         </form>
+        <p className="text-white pt-2">
+          Not Registered Yet ? Please{" "}
+          <button className="link btn-outline text-yellow-400">
+            <Link to={"/signUp"}>Register</Link>
+          </button>
+        </p>
       </div>
     </div>
   );

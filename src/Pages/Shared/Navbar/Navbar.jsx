@@ -6,9 +6,15 @@ const Navbar = () => {
   const { user, LogOut } = useContext(AuthContext);
   const handleLogOut = () => {
     LogOut()
-    .then()
-    .catch(error=>console.log(error.message))
+      .then(() => {
+       alert("Logged out successfully.");
+        
+      })
+      .catch((error) => {
+        console.error("Logout error:", error.message);
+      });
   };
+
   const navlinks = (
     <>
       <li>
@@ -20,18 +26,18 @@ const Navbar = () => {
       <li>
         <NavLink to={"/order"}>Our shop</NavLink>
       </li>
-      {user ? (
+      {user ? <>
         <button
           onClick={handleLogOut}
-          className="text-white border rounded shadow-xl w-16 "
+          className="flex items-start pl-3 lg:items-center"
         >
           Log Out
-        </button>
-      ) : (
+        </button></>
+      : <>
         <li>
           <NavLink to={"/login"}>Login</NavLink>
         </li>
-      )}
+      </>}
     </>
   );
   return (

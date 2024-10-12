@@ -29,18 +29,14 @@ const AuthProvider = ({children}) => {
         return signInWithPopup(auth,provider);
     }
     //state change
-    useEffect(()=>{
-        const unsubscribe=onAuthStateChanged(auth,currentUser=>{
-            if(currentUser)
-            {
-                setUser(currentUser);
-                setLoading(false);
-            }
-        });
-        return ()=>{
-            return unsubscribe();
-        }
-    },[auth])
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser); // This should be set to null on logout
+        setLoading(false);
+      });
+      return () => unsubscribe();
+    }, [auth]);
+
     const AuthInfo = {
       user,
       loading,

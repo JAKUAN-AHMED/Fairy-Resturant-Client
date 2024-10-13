@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [captcha, setCaptcha] = useState(generateCaptcha());
@@ -9,6 +10,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const inputref = useRef();
   const {LogIn}=useContext(AuthContext);
+   const location = useLocation();
+   const navigate = useNavigate();
   function generateCaptcha() {
     const char =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
@@ -35,7 +38,16 @@ const Login = () => {
     LogIn(email,password).then(result=>{
       const user=result.user;
       console.log('logged user',user);
-      alert("logged succesfully")
+      //sweet alert
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Login Successfully",
+        showConfirmButton: true,
+        timer: 1500,
+      });
+
+      navigate(location.state? location?.state:"/");
     })
     .catch(error=>console.log(error.message))
 

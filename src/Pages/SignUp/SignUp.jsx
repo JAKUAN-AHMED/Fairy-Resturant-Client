@@ -7,18 +7,29 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name,setName]=useState("");
-  const {CreateUser}=useContext(AuthContext);
+  const {profile,CreateUser}=useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
-    CreateUser(email,password)
-    .then(result=>{
-        const user=result.user;
-        console.log('signed user',user);
-        
-    })
-    .catch(error=>{
-        console.log(error.message)
-    })
+    CreateUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log("Signed up user", user);
+        // Update profile
+        profile(user, name)
+          .then(() => {
+            return user.reload(); // Reload the user to fetch updated profile data
+          })
+          .then(() => {
+            console.log("Profile updated successfully", user.displayName);
+          })
+          .catch((error) =>
+            console.log("Profile update error:", error.message)
+          );
+      })
+      .catch((error) => {
+        console.log("Sign up error:", error.message);
+      });
+
   };
   useEffect(()=>{
    console.log(name, email, password);

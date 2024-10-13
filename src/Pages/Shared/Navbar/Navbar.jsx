@@ -1,13 +1,24 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
+import Swal from "sweetalert2";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
+  const [cart]=useCart();
   const { user, LogOut } = useContext(AuthContext);
+  console.log(user)
   const handleLogOut = () => {
     LogOut()
       .then(() => {
-       alert("Logged out successfully.");
+       Swal.fire({
+         position: "top",
+         icon: "warning",
+         title: "Log out successfully",
+         showConfirmButton: true,
+         timer: 1500,
+       });
         
       })
       .catch((error) => {
@@ -26,18 +37,29 @@ const Navbar = () => {
       <li>
         <NavLink to={"/order"}>Our shop</NavLink>
       </li>
-      {user ? <>
-        <button
-          onClick={handleLogOut}
-          className="flex items-start pl-3 lg:items-center"
-        >
-          Log Out
-        </button></>
-      : <>
-        <li>
-          <NavLink to={"/login"}>Login</NavLink>
-        </li>
-      </>}
+      {user ? (
+        <>
+          <button
+            onClick={handleLogOut}
+            className="flex items-start pl-3 lg:items-center tooltip tooltip-bottom"
+            data-tip={user?.displayName || "UnKnown"}
+          >
+            Log Out
+          </button>
+        </>
+      ) : (
+        <>
+          <li>
+            <NavLink to={"/login"}>Login</NavLink>
+          </li>
+        </>
+      )}
+      <li>
+        <button className="border rounded shadow-xl lg:ml-4 bg-white w-[100px]">
+          <FaShoppingCart className="text-2xl text-blue-500" />
+          <div className="badge badge-secondary">+{cart.length}</div>
+        </button>
+      </li>
     </>
   );
   return (

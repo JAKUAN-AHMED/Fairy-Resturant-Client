@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../Providers/AuthProvider";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
@@ -55,10 +55,12 @@ const Navbar = () => {
         </>
       )}
       <li>
-        <button className="border rounded shadow-xl lg:ml-4 bg-white w-[100px]">
-          <FaShoppingCart className="text-2xl text-blue-500" />
-          <div className="badge badge-secondary">+{cart.length}</div>
-        </button>
+        <Link to={"/dashboard/cart"}>
+          <button className="border rounded shadow-xl lg:ml-4 bg-white w-[100px] flex items-center">
+            <FaShoppingCart className="text-2xl text-blue-500" />
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </button>
+        </Link>
       </li>
     </>
   );
@@ -98,6 +100,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 ">{navlinks}</ul>
       </div>
       <div className="navbar-end">
+        
         <button className="px-2 py-1 bg-gray-600 border rounded shadow-xl text-[10px] lg:text-xl mr-2 font-cinzel text-white">
           Get Started
         </button>

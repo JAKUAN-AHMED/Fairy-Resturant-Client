@@ -18,6 +18,7 @@ const useCategory=()=>{
   const offered = menu.filter((item)=> item.category==="offered");
 
   const categories=[dessert, pizza, salad, soup, drinks,offered];
+  console.log('categories',categories);
   const categoryNames=["dessert","pizza","salad","soup","drinks","offered"]; 
 
   return { categories, categoryNames, images };

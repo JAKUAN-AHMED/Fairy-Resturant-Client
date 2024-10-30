@@ -17,7 +17,7 @@ const OrderMenu = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  let itemsPerPage =6;
 
   // Pagination logic
   const handlePageChange = (newPage) => {
@@ -58,7 +58,7 @@ const OrderMenu = () => {
             const lastItemIdx=currentPage*itemsPerPage;
             const firstItemIdx=lastItemIdx-itemsPerPage;
             const currentItems=category.slice(firstItemIdx,lastItemIdx);
-            const totalPages=Math.ceil(category.length/itemsPerPage);
+           const totalPages=Math.ceil(category.length/itemsPerPage);
             const pages=[...Array(totalPages).keys()].map((num)=>num+1)
             return (
               <TabPanel key={i} className="w-full">

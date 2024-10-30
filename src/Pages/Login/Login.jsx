@@ -1,7 +1,9 @@
-import { useContext, useRef, useState } from "react";
+import {useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Providers/AuthProvider";
 import Swal from "sweetalert2";
+import { GoArrowLeft } from "react-icons/go";
+import SocialLogin from "../../Components/SocialLogin/SocialLogin";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
   const [captcha, setCaptcha] = useState(generateCaptcha());
@@ -9,9 +11,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const inputref = useRef();
-  const {LogIn}=useContext(AuthContext);
-   const location = useLocation();
-   const navigate = useNavigate();
+  const { LogIn } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   function generateCaptcha() {
     const char =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789";
@@ -35,26 +37,31 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // alert("Logging in...");
-    LogIn(email,password).then(result=>{
-      const user=result.user;
-      console.log('logged user',user);
-      //sweet alert
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Login Successfully",
-        showConfirmButton: true,
-        timer: 1500,
-      });
+    LogIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log("logged user", user);
+        //sweet alert
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Login Successfully",
+          showConfirmButton: true,
+          timer: 1500,
+        });
 
-      navigate(location.state? location?.state:"/");
-    })
-    .catch(error=>console.log(error.message))
-
+        navigate(location.state ? location?.state : "/");
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col lg:flex-row space-y-6 items-center justify-center text-center px-8 py-8 lg:w-[1000px] lg:h-[500px] bg-zinc-900 border-blue-600 rounded shadow-4xl lg:mt-16 font-cinzel border-2">
+    <div className="max-w-7xl mx-auto relative flex flex-col lg:flex-row space-y-6 items-center justify-center text-center px-8 py-8 lg:w-[1000px] lg:h-[500px] bg-zinc-900 border-blue-600 rounded shadow-4xl lg:mt-16 font-cinzel border-2">
+      <Link to={"/"} className="absolute top-0 left-0 p-4">
+        <button className="text-base border-2 border-yellow-200 space-y-2 space-x-4 px-2 text-white">
+          <GoArrowLeft />
+        </button>
+      </Link>
       <div className="lg:w-1/2 flex flex-col items-center justify-center space-y-4 text-white">
         <h2 className="text-5xl text-blue-600 font-bold">Login</h2>
         <p className="lg:w-[400px] text-gray-300">
@@ -134,6 +141,8 @@ const Login = () => {
           <button className="link btn-outline text-yellow-400">
             <Link to={"/signUp"}>Register</Link>
           </button>
+          <div className="divider divider-neutral">or</div>
+          <SocialLogin></SocialLogin>
         </p>
       </div>
     </div>

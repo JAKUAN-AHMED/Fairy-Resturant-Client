@@ -40,6 +40,7 @@ const Cart = () => {
     }
     return (
       <div className="overflow-hidden">
+        {/* heading part */}
         <div className="p-4 flex justify-evenly">
           <h2 className="text-xs md:text-xl lg:text-4xl">
             Total Items : {cart.length}
@@ -48,6 +49,7 @@ const Cart = () => {
             Total Price : {totalPrice}
           </h2>
         </div>
+        {/* table part */}
         <div className="p-4">
           <table className="table-auto w-full">
             <thead>
@@ -71,7 +73,7 @@ const Cart = () => {
             </thead>
             <tbody>
               {cart.map((item) => (
-                <tr key={item.id} className="border-t">
+                <tr key={item._id} className="border-t">
                   <td className="px-1 py-2">
                     <img
                       src={item.image}
